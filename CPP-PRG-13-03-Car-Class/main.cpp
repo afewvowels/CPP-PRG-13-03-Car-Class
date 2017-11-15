@@ -29,10 +29,83 @@
 //  brake function, get the current speed of the car and display it.
 
 #include <iostream>
+#include "Car.hpp"
 
 using namespace std;
 
+Car createCar();
+void modifySpeed(Car);
+
 int main()
 {
+    Car carNewCar = createCar();
+    
+    modifySpeed(carNewCar);
+    
     return 0;
+}
+
+Car createCar()
+{
+    int intCarYear;
+    
+    string strCarMake;
+    
+    cout << "Please enter a model year: ";
+    cin >> intCarYear;
+    while (!cin || intCarYear < 1950 || intCarYear > 2018)
+    {
+        cout << "Please enter a model year between 1950 and 2018: ";
+        cin.clear();
+        cin.ignore();
+        cin >> intCarYear;
+    }
+        
+    cout << "Please enter the make of the car: ";
+    cin.clear();
+    cin.ignore();
+    getline(cin, strCarMake);
+    
+    Car carCar(intCarYear, strCarMake);
+    
+    return carCar;
+}
+
+void modifySpeed(Car carCar)
+{
+    int intMenuSelection = -1;
+    
+    while (intMenuSelection != 3)
+    {
+        cout << "Please select from the following menu options:\n";
+        cout << "\t1. Accelerate\n";
+        cout << "\t2. Brake\n";
+        cout << "\t3. Quit\n";
+        cout << "Make your selection: ";
+        cin >> intMenuSelection;
+        while (!cin || intMenuSelection < 1 || intMenuSelection > 3)
+        {
+            cout << "Please select from the available menu options: ";
+            cin.clear();
+            cin.ignore();
+            cin >> intMenuSelection;
+        }
+        
+        if (intMenuSelection == 1)
+        {
+            carCar.setSpeedAccelerate();
+            cout << "Speed: " << carCar.getSpeed() << endl;
+        }
+        else if (intMenuSelection == 2)
+        {
+            carCar.setSpeedBrake();
+            cout << "Speed: " << carCar.getSpeed() << endl;
+        }
+        else if (intMenuSelection == 3)
+            break;
+        else
+            cout << "ERROR WITH MENU SELCETION";
+    }
+    
+    cout << "\nYou have exited the program\n\n";
 }
